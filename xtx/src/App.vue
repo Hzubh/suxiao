@@ -4,14 +4,10 @@
 
 <template>
   <!-- 一级出口路由组件 -->
-  <RouterView/>
-  <div class="test">
-    test scss  
-  </div>
+  <RouterView></RouterView>
+  
 </template>
 
-<style scoped lang="scss">
-  .test{
-    color: $warnColor;
-  }
+<style scoped>
+
 </style>
