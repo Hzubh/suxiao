@@ -1,12 +1,20 @@
-import { ref, computed } from 'vue'
+import { ref} from 'vue'
 import { defineStore } from 'pinia'
+import { getcategaryApi } from '@/apis/layout'
 
-export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
+
+export const usecategoryStore = defineStore('category', () => {
+  //导航列表的数据管理
+  //state数据
+  const categorylist = ref([])
+
+  //action获取导航数据方法
+  const getcategory = async()=>{
+    const res=await getcategaryApi()
+    categorylist.value = res.result
   }
-
-  return { count, doubleCount, increment }
+  return { categorylist, getcategory}
 })
+
+
+
