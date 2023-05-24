@@ -15,3 +15,8 @@ export function gethotApi(){
         url:'home/hot'
     }) 
 }
+export function getgoodsApi(){
+    return http({
+        url:'home/goods'
+    }) 
+}

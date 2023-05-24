@@ -1,7 +1,6 @@
 <script setup>
 import {useBannerStore} from '@/stores/banner'
 const bannerstore = useBannerStore()
-console.log(bannerstore.Bannerlist);
 </script>
 
 
