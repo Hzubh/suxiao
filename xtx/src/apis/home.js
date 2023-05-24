@@ -5,3 +5,13 @@ export function getBannerApi() {
         url:'home/banner'
     })
 }
+export function getnewApi(){
+    return http({
+        url:'home/new'
+    }) 
+}
+export function gethotApi(){
+    return http({
+        url:'home/hot'
+    }) 
+}

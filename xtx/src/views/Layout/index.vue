@@ -5,7 +5,7 @@ import LayoutHeader from './components/LayoutHeader.vue'
 import LayoutFooter from './components/LayoutFooter.vue'
 import LayoutHeaderFloat from './components/LayoutHeaderFloat.vue';
 import { usecategoryStore } from '@/stores/counter'; 
-
+import HomePanel from './components/HomePanel.vue';
 import { onMounted } from 'vue';
 
 const categorystore = usecategoryStore()
@@ -21,4 +21,5 @@ onMounted(()=>
   <LayoutHeader/>
   <RouterView />
   <LayoutFooter />
+  
 </template>
