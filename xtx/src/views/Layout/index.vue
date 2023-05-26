@@ -11,7 +11,6 @@ import { onMounted } from 'vue';
 const categorystore = usecategoryStore()
 onMounted(()=>
   categorystore.getcategory()
-
 )  
 </script>
 
