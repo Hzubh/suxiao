@@ -5,7 +5,6 @@ import LayoutHeader from './components/LayoutHeader.vue'
 import LayoutFooter from './components/LayoutFooter.vue'
 import LayoutHeaderFloat from './components/LayoutHeaderFloat.vue';
 import { usecategoryStore } from '@/stores/counter'; 
-import HomePanel from '../Home/component/HomePanel.vue';
 import { onMounted } from 'vue';
 
 const categorystore = usecategoryStore()
@@ -18,7 +17,9 @@ onMounted(()=>
   <LayoutHeaderFloat/>
   <LayoutNav />
   <LayoutHeader/>
-  <RouterView />
+  <!-- 添加key 破坏复用机制 强制销毁重建 -->
+  <!-- <RouterView :key="$route.fullPath"/> -->
+  <RouterView/>
   <LayoutFooter />
   
 </template>

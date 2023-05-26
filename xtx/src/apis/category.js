@@ -1,5 +1,5 @@
 import http from "@/utils/http";
-export function getcatetoryApi(id) {
+export function getcategoryApi(id) {
     return http({
         url:'category',
         params:{

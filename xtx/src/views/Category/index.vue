@@ -1,32 +1,16 @@
 <script setup>
-import { getcatetoryApi } from '@/apis/category';
-import { onMounted } from 'vue';
-import { ref } from 'vue';
-import { useRoute} from 'vue-router'
-import { getBannerApi } from '@/apis/home';
+
 import Gooditem from '../Home/component/Gooditem.vue';
+import {useBanner} from '../Category/composables/useBanner'
+import {useCategory} from '../Category/composables/useCategory'
+
+
 //轮播图的使用
-//state数据
-const Bannerlist = ref([])
-  
-  //action获取导航数据方法
-  const getBanner = async()=>{
-    const res=await getBannerApi({
-      distributionSite:'2'
-    })
-    Bannerlist.value = res.result
-  }
-//获取数据
-const categoryList = ref({})
-const route = useRoute()
-const getcatetory = async ()=>{
-  const res = await getcatetoryApi(route.params.id)
-  categoryList.value =  res.result
-}
-onMounted(()=>{
-  getcatetory(),
-  getBanner()
-})
+const {Bannerlist} =useBanner()
+//分类数据的使用
+const {categoryList} = useCategory()
+//目标:路由参数发生变化，可以将分类数据接口重新发送
+
 
 
 </script>
