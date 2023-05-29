@@ -20,10 +20,11 @@ export function getsubcategoryFilterApi(id) {
 }
 
 
-export function getsubcategoryApi() {
+export function getsubcategoryApi(data) {
     return http({
         url:'category/goods/temporary',
         method:'POST',
         data
+        
     })
 }

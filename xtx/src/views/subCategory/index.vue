@@ -1,15 +1,50 @@
 <script setup>
 import { getsubcategoryFilterApi } from '@/apis/category';
+import { getsubcategoryApi } from '@/apis/category';
 import { ref ,onMounted} from 'vue';
 import { useRoute } from 'vue-router';
+import Gooditem from '../Home/component/Gooditem.vue';
+//获取面包屑导航数据
 const CategoryDate =  ref({})
 const route = useRoute()
 const getFilter =async ()=>{
    const res =await getsubcategoryFilterApi(route.params.id)
    CategoryDate.value= res.result
-   console.log(res);
+  }
+  onMounted(()=>getFilter())
+
+//商品详情
+// 获取基础列表数据渲染
+const goodList = ref([])
+const reqData = ref({
+  categoryId: route.params.id,
+  page: 1,
+  pageSize: 20,
+  sortField: 'publishTime'
+})
+  
+
+
+const getGoodList = async () => {
+  const res = await getsubcategoryApi(reqData.value)
+  console.log(res)
+  goodList.value = res.result.items
 }
-onMounted(()=>getFilter())
+const tabChange =()=>{
+  console.log("tab切换了"+reqData.value.sortField);
+  reqData.value.page=1
+  getGoodList()
+}
+const load = async()=>{
+  console.log('开始加载');
+  //获取下一页的数据
+  reqData.value.page++;
+  const res = await getsubcategoryApi(reqData.value)
+  goodList.value=[...goodList.value,...res.result.items]
+}
+onMounted(() => getGoodList())
+
+
 
 </script>
 
@@ -20,17 +55,18 @@ onMounted(()=>getFilter())
       <el-breadcrumb separator=">">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="{ path: `/category/${ CategoryDate.parentId }` }">{{ CategoryDate.parentName }} </el-breadcrumb-item>
-        <el-breadcrumb-item>{{ CategoryDate.name }}</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: ``}">{{ CategoryDate.name }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="sub-container">
-      <el-tabs>
+      <el-tabs v-model="reqData.sortField" @tab-change="tabChange ">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <div class="body" v-infinite-scroll="load"> 
          <!-- 商品列表-->
+         <Gooditem v-for="items in goodList" :good="items"  :key="items.id" />
       </div>
     </div>
   </div>
