@@ -27,7 +27,6 @@ const reqData = ref({
 
 const getGoodList = async () => {
   const res = await getsubcategoryApi(reqData.value)
-  console.log(res)
   goodList.value = res.result.items
 }
 const tabChange =()=>{
