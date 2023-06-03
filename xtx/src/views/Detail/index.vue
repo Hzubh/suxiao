@@ -4,6 +4,7 @@ import { getDetailApi } from '@/apis/detail';
 import { onMounted } from 'vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
+import imgView from '@/components/imgView/index.vue'
 
 const Goods = ref({})
 const route =useRoute()
@@ -35,7 +36,7 @@ onMounted(()=>getGood())
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-
+                <imgView :image-list="Goods.mainPictures"/>
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
@@ -112,16 +113,16 @@ onMounted(()=>getGood())
                     </li>
                   </ul>
                   <!-- 图片 -->
-                  <img    v-for="item in Goods.details.pictures" :key="item" v-img-lazy="item" alt="/">
+                  <img    v-for="item in Goods.details.pictures" :key="item" :src="item" alt="/">
                 </div>
               </div>
             </div>
             <!-- 24热榜+专题推荐 -->
             <div class="goods-aside">
               <!-- 24小时 -->
-              <detailHot hot-type="1"/>
+              <detailHot hot-type="1" />
               <!-- 周 -->
-              <detailHot hot-type="2"/>
+              <detailHot hot-type="2" />
             </div>
           </div>
         </div>
