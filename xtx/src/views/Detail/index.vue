@@ -4,13 +4,17 @@ import { getDetailApi } from '@/apis/detail';
 import { onMounted } from 'vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import imgView from '@/components/imgView/index.vue'
 
 const Goods = ref({})
 const route =useRoute()
 const getGood = async()=>{
    const res= await  getDetailApi(route.params.id)
    Goods.value=res.result
+}
+
+//sku被操作时
+const skuchange =(sku)=>{
+  console.log(sku);
 }
 
 onMounted(()=>getGood())
@@ -85,7 +89,7 @@ onMounted(()=>getGood())
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <XtxSku :goods="Goods" @change="skuchange"/>
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
