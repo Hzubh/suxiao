@@ -1,14 +1,15 @@
 <script setup>
 //表单校验（账户+密码）
 //准备表单对象
-import {getLoginApi} from '@/apis/usr'
 import { ref } from 'vue';
 import { ElMessage } from'element-plus';
 import 'element-plus/theme-chalk/el-message.css'
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/usr';
+const userStore = useUserStore()
 const form = ref({
-    account:'',
-    password:'',
+    account:'heima282',
+    password:'hm#qd@23!',
     agree:true
 } )
 
@@ -43,8 +44,7 @@ const toLogin= ()=>{
   formRef.value.validate(async (valid)=>{
     if(valid){
       
-      const res = await getLoginApi({account,password})
-      console.log(res);
+      await userStore.getUserInfo({account,password})
       ElMessage({type:'success',message:"登录成功"})
       //跳转页面
       route.replace({path:'/'})
