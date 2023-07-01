@@ -1,15 +1,24 @@
 <script setup>
-
+import router from '@/router';
+import { useUserStore } from '@/stores/usr';
+const userStore = useUserStore();
+const confirm=()=>{
+  console.log('用户要退出了');
+  //1.用户退出
+  userStore.clearUser
+  //2.
+  router.push('/login')
+  }
 </script>
 
 <template>
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <template v-if="flase">
-          <li><a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a></li>
+        <template v-if="userStore.user.token">
+          <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{ userStore.user.account }}</a></li>
           <li>
-            <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
+            <el-popconfirm @confirm="confirm" title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
               <template #reference>
                 <a href="javascript:;">退出登录</a>
               </template>
