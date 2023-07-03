@@ -4,7 +4,9 @@ import { getDetailApi } from '@/apis/detail';
 import { onMounted } from 'vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-
+import { ElMessage } from 'element-plus';
+import { useCartStore } from '@/stores/cartStore';
+const cartStore= useCartStore()
 const Goods = ref({})
 const route =useRoute()
 const getGood = async()=>{
@@ -13,10 +15,37 @@ const getGood = async()=>{
 }
 
 //sku被操作时
+let skuObj={}
 const skuchange =(sku)=>{
   console.log(sku);
+  skuObj=sku
 }
 
+//count 
+const count = ref(1)
+const countchange= (count)=>{
+  console.log(count);
+}
+//添加购物车
+const addCart=()=>{
+  if(skuObj.skuId){
+    //规则已经选择
+    cartStore.addcart({
+      id:Goods.value.id,//商品id
+      name:Goods.value.name,//商品名称
+      picture:Goods.value.mainPictures[0],//图片
+      price:Goods.value.price,//最新价格
+      count:count.value,//商品数量
+      skuId:skuObj.skuId,//skuId
+      attrsText:skuObj.specsText,//商品规格文本
+      selected:true,//商品是否选中
+    })
+  }
+  else{
+    //规格没有选择，提醒用户
+    ElMessage.warning('请选择规格') 
+  }
+}
 onMounted(()=>getGood())
 
 </script>
@@ -70,8 +99,8 @@ onMounted(()=>getGood())
               <p class="g-name"> {{ Goods.name }} </p>
               <p class="g-desc">{{ Goods.desc }} </p>
               <p class="g-price">
-                <span>{{ Goods.oldPrice }}</span>
                 <span>{{ Goods.price }}</span>
+                <span>{{ Goods.oldPrice }}</span>
               </p>
               <div class="g-service">
                 <dl>
@@ -91,10 +120,10 @@ onMounted(()=>getGood())
               <!-- sku组件 -->
               <XtxSku :goods="Goods" @change="skuchange"/>
               <!-- 数据组件 -->
-
+              <el-input-number v-model="count"  @change="countchange" />
               <!-- 按钮组件 -->
               <div>
-                <el-button size="large" class="btn">
+                <el-button size="large" class="btn" @click="addCart">
                   加入购物车
                 </el-button>
               </div>
