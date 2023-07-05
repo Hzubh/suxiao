@@ -17,15 +17,15 @@ const getGood = async()=>{
 //sku被操作时
 let skuObj={}
 const skuchange =(sku)=>{
-  console.log(sku);
+  
   skuObj=sku
 }
 
 //count 
 const count = ref(1)
-const countchange= (count)=>{
-  console.log(count);
-}
+// const countchange= (count)=>{
+//   console.log(count);
+// }
 //添加购物车
 const addCart=()=>{
   if(skuObj.skuId){
